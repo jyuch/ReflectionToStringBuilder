@@ -8,8 +8,19 @@ using System.Text;
 namespace Jyuch.ReflectionToStringBuilder.Tests
 {
     [TestClass()]
-    public class ToStringBuilderTests
+    public class BasicToStringTests
     {
+        [TestMethod()]
+        public void ProcessNonePropertyClass()
+        { 
+            var source = new NonePropertyClass();
+            var expected = $"{nameof(NonePropertyClass)}{{}}";
+            var actual = ToStringBuilder.ToString(source);
+
+            Console.WriteLine(actual);
+            Assert.AreEqual(expected,actual);
+        }
+
         [TestMethod()]
         public void ProcessSinglePropertyClass()
         {
@@ -19,7 +30,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
             var actual = ToStringBuilder.ToString(source);
 
             Console.WriteLine(actual);
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -35,7 +46,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
             var actual = ToStringBuilder.ToString(source);
 
             Console.WriteLine(actual);
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -58,7 +69,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
             var actual = ToStringBuilder.ToString(source);
 
             Console.WriteLine(actual);
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -70,25 +81,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
             var actual = ToStringBuilder.ToString(source);
 
             Console.WriteLine(actual);
-            Assert.AreEqual(actual, expected);
-        }
-
-        private class SinglePropertyClass
-        {
-            public string Property1 { get; set; }
-        }
-
-        private class DualPropertyClass
-        {
-            public string Property1 { get; set; }
-            public string Property2 { get; set; }
-        }
-
-        private class TriplePropertyClass
-        {
-            public string Property1 { get; set; }
-            public string Property2 { get; set; }
-            public string Property3 { get; set; }
+            Assert.AreEqual(expected, actual);
         }
     }
 }
