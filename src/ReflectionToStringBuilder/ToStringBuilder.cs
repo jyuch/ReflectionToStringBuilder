@@ -27,7 +27,13 @@ namespace Jyuch.ReflectionToStringBuilder
 
         public static string ToString<T>(T obj)
         {
+            return ToString(obj, new ToStringConfig<T>());
+        }
+
+        public static string ToString<T>(T obj, ToStringConfig<T> config)
+        {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (config == null) throw new ArgumentNullException(nameof(config));
 
             var objType = typeof(T);
             IEnumerable<PropertyAccessor> exprs;
@@ -37,23 +43,37 @@ namespace Jyuch.ReflectionToStringBuilder
                 _cache.TryAdd(objType, exprs);
             }
 
+            var displayExpr = exprs.Where(it => !config.IgnoreProperty.Any(j => j == it.PropertyInfo));
+            var r = displayExpr.Select(it => new { PropertyName = it.PropertyInfo.Name, Value = it.Accessor(obj)});
+
+            if (config.IgnoreMode != IgnorePropertyMode.None)
+                r = r.Where(it => it.Value != null);
+
+            if (config.IgnoreMode == IgnorePropertyMode.NullOrWhiteSpace)
+                r = r.Where(it => !string.IsNullOrWhiteSpace(it.Value.ToString()));
+
             var toStringText = new StringBuilder();
             toStringText.Append(objType.Name).Append("{");
 
-            if (exprs.Count() != 0)
+            if (r.Count() != 0)
             {
-                var a = exprs.First();
-                toStringText.Append(PropertyFormatter(a, obj));
+                var a = r.First();
+                toStringText.Append(PropertyFormatter(a.PropertyName, a.Value));
 
-                foreach (var it in exprs.Skip(1))
+                foreach (var it in r.Skip(1))
                 {
                     toStringText.Append(",");
-                    toStringText.Append(PropertyFormatter(it, obj));
+                    toStringText.Append(PropertyFormatter(it.PropertyName, it.Value));
                 }
             }
 
             toStringText.Append("}");
             return toStringText.ToString();
+        }
+
+        private static string PropertyFormatter(string propertyName, object value)
+        {
+            return $"{propertyName}={value?.ToString() ?? string.Empty}";
         }
 
         private static IEnumerable<PropertyAccessor> InitAccessor(Type targetType)
@@ -77,11 +97,6 @@ namespace Jyuch.ReflectionToStringBuilder
             }
 
             return result;
-        }
-
-        private static string PropertyFormatter(PropertyAccessor p, object obj)
-        {
-            return $"{p.PropertyInfo.Name}={p.Accessor(obj)?.ToString() ?? string.Empty}";
         }
     }
 }

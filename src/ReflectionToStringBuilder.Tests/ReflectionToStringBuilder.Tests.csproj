@@ -6,7 +6,7 @@
     <ProjectGuid>{6D601CA2-D1E6-4934-9885-6C0B0486C637}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReflectionToStringBuilder.Tests</RootNamespace>
+    <RootNamespace>Jyuch.ReflectionToStringBuilder.Tests</RootNamespace>
     <AssemblyName>ReflectionToStringBuilder.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,13 +46,17 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TargetClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToStringBuilderTests.cs" />
+    <Compile Include="BasicToStringTests.cs" />
+    <Compile Include="IgnorePropertyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReflectionToStringBuilder\ReflectionToStringBuilder.csproj">
