@@ -27,7 +27,7 @@ namespace Jyuch.ReflectionToStringBuilder
 
         public static string ToString<T>(T obj)
         {
-            return ToString(obj, ToStringConfig<T>.Default);
+            return ToString(obj, new ToStringConfig<T>());
         }
 
         public static string ToString<T>(T obj, ToStringConfig<T> config)
@@ -43,7 +43,8 @@ namespace Jyuch.ReflectionToStringBuilder
                 _cache.TryAdd(objType, exprs);
             }
 
-            var r = exprs.Select(it => new { PropertyName = it.PropertyInfo.Name, Value = it.Accessor(obj)});
+            var displayExpr = exprs.Where(it => !config.IgnoreProperty.Any(j => j == it.PropertyInfo));
+            var r = displayExpr.Select(it => new { PropertyName = it.PropertyInfo.Name, Value = it.Accessor(obj)});
 
             if (config.IgnoreMode != IgnorePropertyMode.None)
                 r = r.Where(it => it.Value != null);

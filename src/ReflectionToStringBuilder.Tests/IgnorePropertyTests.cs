@@ -29,5 +29,22 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
             Console.WriteLine(actual);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void IgnoreSpecifiedProperty()
+        {
+            var property1Value = "Property1";
+            var property2Value = "Property2";
+            var source = new DualPropertyClass() { Property1 = property1Value, Property2 = property2Value };
+            var expected =
+                $"{nameof(DualPropertyClass)}{{" +
+                $"{nameof(DualPropertyClass.Property1)}={property1Value}}}";
+            var config = new ToStringConfig<DualPropertyClass>();
+            config.SetIgnoreProperty(it => it.Property2);
+            var actual = ToStringBuilder.ToString(source, config);
+
+            Console.WriteLine(actual);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
