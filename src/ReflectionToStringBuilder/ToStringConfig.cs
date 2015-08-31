@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
 namespace Jyuch.ReflectionToStringBuilder
 {
@@ -13,11 +12,11 @@ namespace Jyuch.ReflectionToStringBuilder
 
         public IgnorePropertyMode IgnoreMode { get; set; } = IgnorePropertyMode.None;
 
-        internal IEnumerable<PropertyInfo> IgnoreProperty
+        internal HashSet<PropertyInfo> IgnoreProperty
         {
             get
             {
-                return _ignoreProperty.ToArray();
+                return _ignoreProperty;
             }
         }
 

@@ -42,9 +42,10 @@ namespace Jyuch.ReflectionToStringBuilder
                 exprs = InitAccessor(objType);
                 _cache.TryAdd(objType, exprs);
             }
-
-            var displayExpr = exprs.Where(it => !config.IgnoreProperty.Any(j => j == it.PropertyInfo));
-            var r = displayExpr.Select(it => new { PropertyName = it.PropertyInfo.Name, Value = it.Accessor(obj)});
+            
+            var r = exprs
+                .Where(it => !config.IgnoreProperty.Contains(it.PropertyInfo))
+                .Select(it => new { PropertyName = it.PropertyInfo.Name, Value = it.Accessor(obj) });
 
             if (config.IgnoreMode != IgnorePropertyMode.None)
                 r = r.Where(it => it.Value != null);
