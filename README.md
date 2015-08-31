@@ -25,4 +25,4 @@ ReflectionでToStringするアレ
 
 ## License
 本ライブラリはMITライセンスのもとで公開されています。
-詳しくは[LICENSE](https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE)をご覧ください。
+詳しくは[LICENSE](./LICENSE)をご覧ください。
