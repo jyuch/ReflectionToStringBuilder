@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) 2015 jyuch
+// Released under the MIT license
+// https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jyuch.ReflectionToStringBuilder.Tests
@@ -9,9 +13,10 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
         [TestMethod]
         public void IgnoreNullProperty()
         {
-            var source = new DualPropertyClass() { Property1 = string.Empty, Property2 = null };
+            var property1Value = " ";
+            var source = new DualPropertyClass() { Property1 = property1Value, Property2 = null };
             var config = new ToStringConfig<DualPropertyClass>() { IgnoreMode = IgnorePropertyMode.Null };
-            var expected = $"{nameof(DualPropertyClass)}{{{nameof(DualPropertyClass.Property1)}=}}";
+            var expected = $"{nameof(DualPropertyClass)}{{{nameof(DualPropertyClass.Property1)}={property1Value}}}";
             var actual = ToStringBuilder.ToString(source, config);
 
             Console.WriteLine(actual);

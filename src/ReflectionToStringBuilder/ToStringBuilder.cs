@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) 2015 jyuch
+// Released under the MIT license
+// https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +12,9 @@ using System.Text;
 
 namespace Jyuch.ReflectionToStringBuilder
 {
+    /// <summary>
+    /// オブジェクトの文字列形式を返す静的メソッドを提供します。
+    /// </summary>
     public static class ToStringBuilder
     {
         private static ConcurrentDictionary<Type, IEnumerable<PropertyAccessor>> _cache
@@ -25,11 +32,24 @@ namespace Jyuch.ReflectionToStringBuilder
             }
         }
 
+        /// <summary>
+        /// オブジェクトの文字列形式を動的に生成して返します。
+        /// </summary>
+        /// <typeparam name="T">文字列形式を生成するオブジェクトの型。</typeparam>
+        /// <param name="obj">文字列形式を生成するインスタンス。</param>
+        /// <returns>オブジェクトの文字列形式。</returns>
         public static string ToString<T>(T obj)
         {
             return ToString(obj, new ToStringConfig<T>());
         }
 
+        /// <summary>
+        /// 指定した設定を用いてオブジェクトの文字列形式を動的に生成して返します。
+        /// </summary>
+        /// <typeparam name="T">文字列形式を生成するオブジェクトの型。</typeparam>
+        /// <param name="obj">文字列形式を生成するインスタンス。</param>
+        /// <param name="config">文字列形式の生成に用いる設定。</param>
+        /// <returns>オブジェクトの文字列形式。</returns>
         public static string ToString<T>(T obj, ToStringConfig<T> config)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
