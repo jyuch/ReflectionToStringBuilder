@@ -12,6 +12,11 @@ ReflectionでToStringするアレ
 - Windows 8.1 Pro
 - Visual Studio 2015 Community Edition
 
+## Usagi
+使い方はWikiを参照して下さい。
+
+https://github.com/jyuch/ReflectionToStringBuilder/wiki
+
 ## 免責事項
 本ライブラリの使用はすべて自己責任で行ってください。
 
