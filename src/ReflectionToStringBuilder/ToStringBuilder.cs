@@ -17,7 +17,7 @@ namespace Jyuch.ReflectionToStringBuilder
     /// </summary>
     public static class ToStringBuilder
     {
-        private static ConcurrentDictionary<Type, IEnumerable<PropertyAccessor>> _cache
+        private static ConcurrentDictionary<Type, IEnumerable<PropertyAccessor>> _accessorCache
             = new ConcurrentDictionary<Type, IEnumerable<PropertyAccessor>>();
 
         private class PropertyAccessor
@@ -57,10 +57,10 @@ namespace Jyuch.ReflectionToStringBuilder
 
             var objType = typeof(T);
             IEnumerable<PropertyAccessor> exprs;
-            if (!_cache.TryGetValue(objType, out exprs))
+            if (!_accessorCache.TryGetValue(objType, out exprs))
             {
                 exprs = InitAccessor(objType);
-                _cache.TryAdd(objType, exprs);
+                _accessorCache.TryAdd(objType, exprs);
             }
             
             var r = exprs
@@ -75,19 +75,7 @@ namespace Jyuch.ReflectionToStringBuilder
 
             var toStringText = new StringBuilder();
             toStringText.Append(objType.Name).Append("{");
-
-            if (r.Count() != 0)
-            {
-                var a = r.First();
-                toStringText.Append(PropertyFormatter(a.PropertyName, a.Value));
-
-                foreach (var it in r.Skip(1))
-                {
-                    toStringText.Append(",");
-                    toStringText.Append(PropertyFormatter(it.PropertyName, it.Value));
-                }
-            }
-
+            toStringText.Append(string.Join(",", r.Select(it => PropertyFormatter(it.PropertyName, it.Value))));
             toStringText.Append("}");
             return toStringText.ToString();
         }
