@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Jyuch.ReflectionToStringBuilder
 {
-    public class ToStringMap<T>
+    public abstract class ToStringMap<T>
     {
     }
 }
