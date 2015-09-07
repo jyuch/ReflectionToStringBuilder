@@ -16,15 +16,6 @@ namespace Jyuch.ReflectionToStringBuilder
         private readonly Func<object, object> _accessor;
         private string _name;
 
-        private int _index;
-        internal int IndexOrder
-        {
-            get
-            {
-                return _index;
-            }
-        }
-
         private bool _isIgnore;
         internal bool IsIgnore
         {
@@ -39,7 +30,7 @@ namespace Jyuch.ReflectionToStringBuilder
             _property = property;
             _accessor = ReflectionHelper.GetPropertyAccessor(objectType, property);
             _name = _property.Name;
-            _index = -1;
+            _isIgnore = false;
         }
 
         public ToStringPropertyMap Name(string name)
@@ -47,13 +38,7 @@ namespace Jyuch.ReflectionToStringBuilder
             _name = name;
             return this;
         }
-
-        public ToStringPropertyMap Index(int index)
-        {
-            _index = index;
-            return this;
-        }
-
+        
         public ToStringPropertyMap Ignore()
         {
             _isIgnore = true;
