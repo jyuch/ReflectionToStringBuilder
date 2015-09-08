@@ -67,14 +67,10 @@ namespace Jyuch.ReflectionToStringBuilder
                 .Where(it => !config.IgnoreMember.Contains(it.MemberInfo))
                 .Where(it => config.OutputTarget != TargetType.Property || it.MemberInfo is PropertyInfo)
                 .Where(it => config.OutputTarget != TargetType.Field || it.MemberInfo is FieldInfo)
-                .Select(it => new { MemberName = it.MemberInfo.Name, Value = it.Accessor(obj) });
+                .Select(it => new { MemberName = it.MemberInfo.Name, Value = it.Accessor(obj) })
+                .Where(it => config.IgnoreMode == IgnoreMemberMode.None || it.Value != null)
+                .Where(it => config.IgnoreMode != IgnoreMemberMode.NullOrWhiteSpace || !string.IsNullOrWhiteSpace(it.Value.ToString()));
             
-            if (config.IgnoreMode != IgnoreMemberMode.None)
-                r = r.Where(it => it.Value != null);
-
-            if (config.IgnoreMode == IgnoreMemberMode.NullOrWhiteSpace)
-                r = r.Where(it => !string.IsNullOrWhiteSpace(it.Value.ToString()));
-
             var toStringText = new StringBuilder();
             toStringText.Append(objType.Name).Append("{");
             toStringText.Append(string.Join(",", r.Select(it => PropertyFormatter(it.MemberName, it.Value))));
