@@ -7,7 +7,7 @@ namespace Jyuch.ReflectionToStringBuilder
     /// <summary>
     /// プロパティの<c>null</c>もしくは空白で無視するモードを列挙します。
     /// </summary>
-    public enum IgnorePropertyMode
+    public enum IgnoreMemberMode
     {
         /// <summary>
         /// <c>null</c>もしくは空白にかかわらずすべてのプロパティを文字列形式に含めます。

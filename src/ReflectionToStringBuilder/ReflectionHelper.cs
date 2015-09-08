@@ -10,7 +10,7 @@ namespace Jyuch.ReflectionToStringBuilder
 {
     internal class ReflectionHelper
     {
-        internal static Func<object, object> GetPropertyAccessor(Type objectType, PropertyInfo property)
+        internal static Func<object, object> GetMemberAccessor(Type objectType, MemberInfo property)
         {
             // same as it => (object)((targetType)it).Property
             var arg = Expression.Parameter(typeof(object), "it");
@@ -20,6 +20,11 @@ namespace Jyuch.ReflectionToStringBuilder
             var lambda = Expression.Lambda(convToObject, arg);
             Func<object, object> expr = (Func<object, object>)lambda.Compile();
             return expr;
+        }
+
+        internal static MemberInfo GetMember<TModel>(Expression<Func<TModel, object>> expression)
+        {
+            return GetMemberExpression(expression).Member;
         }
 
         // 以下の2つのメソッドは CsvHelper.ReflectionHelper のメソッドを改変して使用しています
