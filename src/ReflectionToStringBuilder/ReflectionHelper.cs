@@ -10,6 +10,18 @@ namespace Jyuch.ReflectionToStringBuilder
 {
     internal class ReflectionHelper
     {
+        internal static Func<object, object> GetPropertyAccessor(Type objectType, PropertyInfo property)
+        {
+            // same as it => (object)((targetType)it).Property
+            var arg = Expression.Parameter(typeof(object), "it");
+            var convToTarget = Expression.Convert(arg, objectType);
+            var getPropValue = Expression.MakeMemberAccess(convToTarget, property);
+            var convToObject = Expression.Convert(getPropValue, typeof(object));
+            var lambda = Expression.Lambda(convToObject, arg);
+            Func<object, object> expr = (Func<object, object>)lambda.Compile();
+            return expr;
+        }
+
         // 以下の2つのメソッドは CsvHelper.ReflectionHelper のメソッドを改変して使用しています
         // Copyright 2009-2015 Josh Close and Contributors
         // This file is a part of CsvHelper and is dual licensed under MS-PL and Apache 2.0.

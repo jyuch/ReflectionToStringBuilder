@@ -95,13 +95,7 @@ namespace Jyuch.ReflectionToStringBuilder
 
             foreach (var it in toStringProp)
             {
-                // same as it => ((targetType)it).Property
-                var arg = Expression.Parameter(typeof(object), "it");
-                var convToTarget = Expression.Convert(arg, targetType);
-                var getPropValue = Expression.MakeMemberAccess(convToTarget, it);
-                var convToObject = Expression.Convert(getPropValue, typeof(object));
-                var lambda = Expression.Lambda(convToObject, arg);
-                Func<object, object> expr = (Func<object, object>)lambda.Compile();
+                Func<object, object> expr = ReflectionHelper.GetPropertyAccessor(targetType, it);
                 result.Add(new PropertyAccessor(it, expr));
             }
 
