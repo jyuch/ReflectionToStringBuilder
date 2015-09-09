@@ -17,17 +17,17 @@ namespace Jyuch.ReflectionToStringBuilder
     /// </summary>
     public static class ToStringBuilder
     {
-        private static ConcurrentDictionary<Type, IEnumerable<PropertyAccessor>> _accessorCache
-            = new ConcurrentDictionary<Type, IEnumerable<PropertyAccessor>>();
+        private static ConcurrentDictionary<Type, IEnumerable<MemberAccessor>> _accessorCache
+            = new ConcurrentDictionary<Type, IEnumerable<MemberAccessor>>();
 
-        private class PropertyAccessor
+        private class MemberAccessor
         {
-            public PropertyInfo PropertyInfo { get; }
+            public MemberInfo MemberInfo { get; }
             public Func<object, object> Accessor { get; }
 
-            public PropertyAccessor(PropertyInfo info, Func<object, object> accessor)
+            public MemberAccessor(MemberInfo info, Func<object, object> accessor)
             {
-                PropertyInfo = info;
+                MemberInfo = info;
                 Accessor = accessor;
             }
         }
@@ -56,7 +56,7 @@ namespace Jyuch.ReflectionToStringBuilder
             if (config == null) throw new ArgumentNullException(nameof(config));
 
             var objType = typeof(T);
-            IEnumerable<PropertyAccessor> exprs;
+            IEnumerable<MemberAccessor> exprs;
             if (!_accessorCache.TryGetValue(objType, out exprs))
             {
                 exprs = InitAccessor(objType);
@@ -64,18 +64,16 @@ namespace Jyuch.ReflectionToStringBuilder
             }
             
             var r = exprs
-                .Where(it => !config.IgnoreProperty.Contains(it.PropertyInfo))
-                .Select(it => new { PropertyName = it.PropertyInfo.Name, Value = it.Accessor(obj) });
-
-            if (config.IgnoreMode != IgnorePropertyMode.None)
-                r = r.Where(it => it.Value != null);
-
-            if (config.IgnoreMode == IgnorePropertyMode.NullOrWhiteSpace)
-                r = r.Where(it => !string.IsNullOrWhiteSpace(it.Value.ToString()));
-
+                .Where(it => !config.IgnoreMember.Contains(it.MemberInfo))
+                .Where(it => config.OutputTarget != TargetType.Property || it.MemberInfo is PropertyInfo)
+                .Where(it => config.OutputTarget != TargetType.Field || it.MemberInfo is FieldInfo)
+                .Select(it => new { MemberName = it.MemberInfo.Name, Value = it.Accessor(obj) })
+                .Where(it => config.IgnoreMode == IgnoreMemberMode.None || it.Value != null)
+                .Where(it => config.IgnoreMode != IgnoreMemberMode.NullOrWhiteSpace || !string.IsNullOrWhiteSpace(it.Value.ToString()));
+            
             var toStringText = new StringBuilder();
             toStringText.Append(objType.Name).Append("{");
-            toStringText.Append(string.Join(",", r.Select(it => PropertyFormatter(it.PropertyName, it.Value))));
+            toStringText.Append(string.Join(",", r.Select(it => PropertyFormatter(it.MemberName, it.Value))));
             toStringText.Append("}");
             return toStringText.ToString();
         }
@@ -85,24 +83,19 @@ namespace Jyuch.ReflectionToStringBuilder
             return $"{propertyName}={value?.ToString() ?? string.Empty}";
         }
 
-        private static IEnumerable<PropertyAccessor> InitAccessor(Type targetType)
+        private static IEnumerable<MemberAccessor> InitAccessor(Type targetType)
         {
-            var toStringProp = targetType.GetProperties()
-                .Where((it) => it.CanRead)
-                .Where((it) => it.GetIndexParameters().Length == 0);
+            var toStringMember = targetType.GetMembers()
+                .Where((it) => it is PropertyInfo || it is FieldInfo)
+                .Where((it) => it is FieldInfo || ((PropertyInfo)it).GetIndexParameters().Length == 0)
+                .Where((it) => it is FieldInfo || ((PropertyInfo)it).CanRead);
+            
+            var result = new List<MemberAccessor>();
 
-            var result = new List<PropertyAccessor>();
-
-            foreach (var it in toStringProp)
+            foreach (var it in toStringMember)
             {
-                // same as it => ((targetType)it).Property
-                var arg = Expression.Parameter(typeof(object), "it");
-                var convToTarget = Expression.Convert(arg, targetType);
-                var getPropValue = Expression.MakeMemberAccess(convToTarget, it);
-                var convToObject = Expression.Convert(getPropValue, typeof(object));
-                var lambda = Expression.Lambda(convToObject, arg);
-                Func<object, object> expr = (Func<object, object>)lambda.Compile();
-                result.Add(new PropertyAccessor(it, expr));
+                Func<object, object> expr = ReflectionHelper.GetMemberAccessor(targetType, it);
+                result.Add(new MemberAccessor(it, expr));
             }
 
             return result;
