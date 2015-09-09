@@ -15,7 +15,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
         {
             var property1Value = " ";
             var source = new DualPropertyClass() { Property1 = property1Value, Property2 = null };
-            var config = new ToStringConfig<DualPropertyClass>() { IgnoreMode = IgnorePropertyMode.Null };
+            var config = new ToStringConfig<DualPropertyClass>() { IgnoreMode = IgnoreMemberMode.Null };
             var expected = $"{nameof(DualPropertyClass)}{{{nameof(DualPropertyClass.Property1)}={property1Value}}}";
             var actual = ToStringBuilder.ToString(source, config);
 
@@ -27,7 +27,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
         public void IgnoreWhiteSpaceProperty()
         {
             var source = new DualPropertyClass() { Property1 = " ", Property2 = null };
-            var config = new ToStringConfig<DualPropertyClass>() { IgnoreMode = IgnorePropertyMode.NullOrWhiteSpace };
+            var config = new ToStringConfig<DualPropertyClass>() { IgnoreMode = IgnoreMemberMode.NullOrWhiteSpace };
             var expected = $"{nameof(DualPropertyClass)}{{}}";
             var actual = ToStringBuilder.ToString(source, config);
 
@@ -45,7 +45,7 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
                 $"{nameof(DualPropertyClass)}{{" +
                 $"{nameof(DualPropertyClass.Property1)}={property1Value}}}";
             var config = new ToStringConfig<DualPropertyClass>();
-            config.SetIgnoreProperty(it => it.Property2);
+            config.SetIgnoreMember(it => it.Property2);
             var actual = ToStringBuilder.ToString(source, config);
 
             Console.WriteLine(actual);

@@ -25,4 +25,15 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
         public string Property2 { get; set; }
         public string Property3 { get; set; }
     }
+
+    class SingleFieldClass
+    {
+        public string Field1;
+    }
+
+    class PropertyAndFieldClass
+    {
+        public string Property { set; get; }
+        public string Field;
+    }
 }

@@ -83,5 +83,20 @@ namespace Jyuch.ReflectionToStringBuilder.Tests
             Console.WriteLine(actual);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void ProcessOneFieldClass()
+        {
+            var field1Value = "Field1";
+            var source = new SingleFieldClass();
+            source.Field1 = field1Value;
+            var expected = $"{nameof(SingleFieldClass)}{{{nameof(SingleFieldClass.Field1)}={field1Value}}}";
+            var config = new ToStringConfig<SingleFieldClass>();
+            config.OutputTarget = TargetType.Both;
+            var actual = ToStringBuilder.ToString(source, config);
+
+            Console.WriteLine(actual);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
