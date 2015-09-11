@@ -40,7 +40,7 @@ namespace Jyuch.ReflectionToStringBuilder
         /// <returns>オブジェクトの文字列形式。</returns>
         public static string ToString<T>(T obj)
         {
-            return ToString(obj, new ToStringConfig<T>());
+            return ToString(obj, DefaultConfig<T>.Value);
         }
 
         /// <summary>

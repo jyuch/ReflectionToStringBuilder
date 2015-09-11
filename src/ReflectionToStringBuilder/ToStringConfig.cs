@@ -27,14 +27,6 @@ namespace Jyuch.ReflectionToStringBuilder
         /// </summary>
         public TargetType OutputTarget { get; set; } = TargetType.Property;
 
-        internal HashSet<MemberInfo> IgnoreMember
-        {
-            get
-            {
-                return _ignoreMember;
-            }
-        }
-
         /// <summary>
         /// オブジェクトから文字列形式を生成するときに無視するプロパティを指定します。
         /// </summary>
@@ -43,5 +35,18 @@ namespace Jyuch.ReflectionToStringBuilder
         {
             _ignoreMember.Add(ReflectionHelper.GetMember(expression));
         }
+
+        internal HashSet<MemberInfo> IgnoreMember
+        {
+            get
+            {
+                return _ignoreMember;
+            }
+        }
+    }
+
+    internal class DefaultConfig<T>
+    {
+        internal static readonly ToStringConfig<T> Value = new ToStringConfig<T>();
     }
 }
