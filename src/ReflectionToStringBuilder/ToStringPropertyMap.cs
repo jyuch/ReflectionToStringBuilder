@@ -3,16 +3,12 @@
 // https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Jyuch.ReflectionToStringBuilder
 {
     public sealed class ToStringPropertyMap
     {
-        private readonly PropertyInfo _property;
         private readonly Func<object, object> _accessor;
         private string _name;
 
@@ -25,11 +21,10 @@ namespace Jyuch.ReflectionToStringBuilder
             }
         }
 
-        internal ToStringPropertyMap(Type objectType, PropertyInfo property)
+        internal ToStringPropertyMap(Type objectType, MemberInfo member)
         {
-            _property = property;
-            _accessor = ReflectionHelper.GetMemberAccessor(objectType, property);
-            _name = _property.Name;
+            _accessor = ReflectionHelper.GetMemberAccessor(objectType, member);
+            _name = member.Name;
             _isIgnore = false;
         }
 
@@ -49,6 +44,11 @@ namespace Jyuch.ReflectionToStringBuilder
         {
             _isIgnore = ignore;
             return this;
+        }
+
+        internal string ToStringMember(object obj)
+        {
+            return $"{_name}={_accessor(obj)?.ToString() ?? string.Empty}";
         }
     }
 }
