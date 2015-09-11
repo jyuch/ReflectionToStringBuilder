@@ -50,6 +50,8 @@
     <Compile Include="TargetType.cs" />
     <Compile Include="ToStringBuilder.cs" />
     <Compile Include="ToStringConfig.cs" />
+    <Compile Include="ToStringMap.cs" />
+    <Compile Include="ToStringPropertyMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
