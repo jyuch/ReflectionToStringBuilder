@@ -28,7 +28,7 @@ namespace Jyuch.ReflectionToStringBuilder
         internal ToStringPropertyMap(Type objectType, PropertyInfo property)
         {
             _property = property;
-            _accessor = ReflectionHelper.GetPropertyAccessor(objectType, property);
+            _accessor = ReflectionHelper.GetMemberAccessor(objectType, property);
             _name = _property.Name;
             _isIgnore = false;
         }
