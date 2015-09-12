@@ -58,6 +58,9 @@
     <Compile Include="BasicToStringTests.cs" />
     <Compile Include="IgnorePropertyTests.cs" />
     <Compile Include="SwitchPropertyAndFieldTests.cs" />
+    <Compile Include="BasicMapTests.cs" />
+    <Compile Include="MemberNamingTests.cs" />
+    <Compile Include="IgnoreMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReflectionToStringBuilder\ReflectionToStringBuilder.csproj">

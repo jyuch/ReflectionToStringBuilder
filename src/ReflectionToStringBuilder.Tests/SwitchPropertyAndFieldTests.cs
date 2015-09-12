@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) 2015 jyuch
+// Released under the MIT license
+// https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jyuch.ReflectionToStringBuilder.Tests
