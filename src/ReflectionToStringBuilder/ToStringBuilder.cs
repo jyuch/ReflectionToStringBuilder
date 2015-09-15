@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static System.Reflection.BindingFlags;
 
 namespace Jyuch.ReflectionToStringBuilder
 {
@@ -84,7 +85,7 @@ namespace Jyuch.ReflectionToStringBuilder
 
         private static IEnumerable<MemberAccessor> InitAccessor(Type targetType)
         {
-            var toStringMember = targetType.GetMembers()
+            var toStringMember = targetType.GetMembers(Public | Instance)
                 .Where((it) => it is PropertyInfo || it is FieldInfo)
                 .Where((it) => it is FieldInfo || ((PropertyInfo)it).GetIndexParameters().Length == 0)
                 .Where((it) => it is FieldInfo || ((PropertyInfo)it).CanRead);
