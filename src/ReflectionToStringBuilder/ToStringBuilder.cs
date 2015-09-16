@@ -85,20 +85,11 @@ namespace Jyuch.ReflectionToStringBuilder
 
         private static IEnumerable<MemberAccessor> InitAccessor(Type targetType)
         {
-            var toStringMember = targetType.GetMembers(Public | Instance)
+            return targetType.GetMembers(Public | Instance)
                 .Where((it) => it is PropertyInfo || it is FieldInfo)
                 .Where((it) => it is FieldInfo || ((PropertyInfo)it).GetIndexParameters().Length == 0)
-                .Where((it) => it is FieldInfo || ((PropertyInfo)it).CanRead);
-            
-            var result = new List<MemberAccessor>();
-
-            foreach (var it in toStringMember)
-            {
-                Func<object, object> expr = ReflectionHelper.GetMemberAccessor(targetType, it);
-                result.Add(new MemberAccessor(it, expr));
-            }
-
-            return result;
+                .Where((it) => it is FieldInfo || ((PropertyInfo)it).CanRead)
+                .Select((it) => new MemberAccessor(it, ReflectionHelper.GetMemberAccessor(targetType, it)));
         }
     }
 }
