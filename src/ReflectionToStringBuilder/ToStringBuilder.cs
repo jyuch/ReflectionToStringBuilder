@@ -89,7 +89,8 @@ namespace Jyuch.ReflectionToStringBuilder
                 .Where((it) => it is PropertyInfo || it is FieldInfo)
                 .Where((it) => it is FieldInfo || ((PropertyInfo)it).GetIndexParameters().Length == 0)
                 .Where((it) => it is FieldInfo || ((PropertyInfo)it).CanRead)
-                .Select((it) => new MemberAccessor(it, ReflectionHelper.GetMemberAccessor(targetType, it)));
+                .Select((it) => new MemberAccessor(it, ReflectionHelper.GetMemberAccessor(targetType, it)))
+                .ToArray();
         }
     }
 }
