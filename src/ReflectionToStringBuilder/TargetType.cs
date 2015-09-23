@@ -5,22 +5,22 @@
 namespace Jyuch.ReflectionToStringBuilder
 {
     /// <summary>
-    /// 文字列形式のもととなるメンバーの選択モードを列挙します。
+    /// Specifics whether <see cref="ToStringBuilder"/> includes property or field.
     /// </summary>
     public enum TargetType
     {
         /// <summary>
-        /// プロパティを文字列形式に含めます。
+        /// Include property.
         /// </summary>
         Property,
 
         /// <summary>
-        /// フィールドを文字列形式に含めます。
+        /// Include field.
         /// </summary>
         Field,
 
         /// <summary>
-        /// プロパティとフィールドの両方を文字列形式に含めます。
+        /// Include property and field.
         /// </summary>
         Both
     }
