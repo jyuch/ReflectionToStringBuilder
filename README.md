@@ -1,16 +1,21 @@
 # ReflectionToStringBuilder
-It to generate a string-format using reflection.
+Something to generate a string-format using reflection.
 
-# About
+## About
+A library for generate string-format (as ToString method) in dynamic.
 
-# Required Software
+## Required Software
+This library requires .NET Framework 4 or later.
 
-# Usage
+This library developed under below environment.
 
-# Changes from v.1.1
+- Windows 8.1 Pro
+- Visual Studio 2015 Community Edition
 
-# Changes from v.1.0
+## Usage
+Please refer to the Wiki how to use. (in Japanese)
 
-# Disclaimer
+https://github.com/jyuch/ReflectionToStringBuilder/wiki
 
-# License
+## License
+This library released under the MIT license. More details, refer [LICENSE](https://github.com/jyuch/ReflectionToStringBuilder/blob/release/v.1.2/LICENSE).
