@@ -5,22 +5,22 @@
 namespace Jyuch.ReflectionToStringBuilder
 {
     /// <summary>
-    /// プロパティの<c>null</c>もしくは空白で無視するモードを列挙します。
+    /// Specifics whether exclude null or whitespace member.
     /// </summary>
     public enum IgnoreMemberMode
     {
         /// <summary>
-        /// <c>null</c>もしくは空白にかかわらずすべてのプロパティを文字列形式に含めます。
+        /// Include all member to string.
         /// </summary>
         None,
-        
+
         /// <summary>
-        /// プロパティが<c>null</c>の場合は文字列形式に含めません。
+        /// Exclude <c>null</c> member.
         /// </summary>
         Null,
 
         /// <summary>
-        /// プロパティが<c>null</c>もしくは空白のの場合は文字列形式に含めません。
+        /// Exclude <c>null</c> or whitespace member.
         /// </summary>
         NullOrWhiteSpace
     }

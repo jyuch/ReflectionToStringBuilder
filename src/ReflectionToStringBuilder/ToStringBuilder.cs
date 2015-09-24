@@ -13,7 +13,7 @@ using static System.Reflection.BindingFlags;
 namespace Jyuch.ReflectionToStringBuilder
 {
     /// <summary>
-    /// オブジェクトの文字列形式を返す静的メソッドを提供します。
+    /// Provides static method for generate string-format.
     /// </summary>
     public static class ToStringBuilder
     {
@@ -33,23 +33,23 @@ namespace Jyuch.ReflectionToStringBuilder
         }
 
         /// <summary>
-        /// オブジェクトの文字列形式を動的に生成して返します。
+        /// Generates string-format of specified object.
         /// </summary>
-        /// <typeparam name="T">文字列形式を生成するオブジェクトの型。</typeparam>
-        /// <param name="obj">文字列形式を生成するインスタンス。</param>
-        /// <returns>オブジェクトの文字列形式。</returns>
+        /// <typeparam name="T">The type of object generate a string-format.</typeparam>
+        /// <param name="obj">The instance of generate a string-format.</param>
+        /// <returns>The string-format of instance.</returns>
         public static string ToString<T>(T obj)
         {
             return ToString(obj, DefaultConfig<T>.Value);
         }
 
         /// <summary>
-        /// 指定した設定を用いてオブジェクトの文字列形式を動的に生成して返します。
+        /// Generates string-format of specified object using configuration.
         /// </summary>
-        /// <typeparam name="T">文字列形式を生成するオブジェクトの型。</typeparam>
-        /// <param name="obj">文字列形式を生成するインスタンス。</param>
-        /// <param name="config">文字列形式の生成に用いる設定。</param>
-        /// <returns>オブジェクトの文字列形式。</returns>
+        /// <typeparam name="T">The type of object to generate a string-format.</typeparam>
+        /// <param name="obj">The instance to generate a string-format.</param>
+        /// <param name="config">The configuration for generate string-format.</param>
+        /// <returns>The string-format of instance.</returns>
         public static string ToString<T>(T obj, ToStringConfig<T> config)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
