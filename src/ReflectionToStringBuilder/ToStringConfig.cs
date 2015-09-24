@@ -10,22 +10,31 @@ using System.Reflection;
 namespace Jyuch.ReflectionToStringBuilder
 {
     /// <summary>
-    /// オブジェクトの文字列形式を生成するときの設定を表します。
+    /// Represent configuration of generate string-format.
     /// </summary>
-    /// <typeparam name="T">出力対象となるオブジェクトの型。</typeparam>
+    /// <typeparam name="T">The type of object generate a string-format.</typeparam>
     public sealed class ToStringConfig<T>
     {
         private HashSet<MemberInfo> _ignoreMember = new HashSet<MemberInfo>();
 
         /// <summary>
-        /// プロパティを無視するモードを指定します。既定値は<see cref="IgnoreMemberMode.None"/>です。
+        /// Specify mode of ignoring member. Default is <see cref="IgnoreMemberMode.None"/>.
         /// </summary>
         public IgnoreMemberMode IgnoreMode { get; set; } = IgnoreMemberMode.None;
 
         /// <summary>
-        /// 出力する型を指定します。既定値は<see cref="TargetType.Property"/>です。
+        /// Specify output target member. Default is <see cref="TargetType.Property"/>.
         /// </summary>
         public TargetType OutputTarget { get; set; } = TargetType.Property;
+
+        /// <summary>
+        /// Specify member of ignoring when generate string-format.
+        /// </summary>
+        /// <param name="expression">The member of ignoring.</param>
+        public void SetIgnoreMember(Expression<Func<T, object>> expression)
+        {
+            _ignoreMember.Add(ReflectionHelper.GetMember(expression));
+        }
 
         internal HashSet<MemberInfo> IgnoreMember
         {
@@ -34,14 +43,10 @@ namespace Jyuch.ReflectionToStringBuilder
                 return _ignoreMember;
             }
         }
+    }
 
-        /// <summary>
-        /// オブジェクトから文字列形式を生成するときに無視するプロパティを指定します。
-        /// </summary>
-        /// <param name="expression">無視するプロパティ。</param>
-        public void SetIgnoreMember(Expression<Func<T, object>> expression)
-        {
-            _ignoreMember.Add(ReflectionHelper.GetMember(expression));
-        }
+    internal class DefaultConfig<T>
+    {
+        internal static readonly ToStringConfig<T> Value = new ToStringConfig<T>();
     }
 }
