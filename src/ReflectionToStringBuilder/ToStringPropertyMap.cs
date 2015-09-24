@@ -7,6 +7,9 @@ using System.Reflection;
 
 namespace Jyuch.ReflectionToStringBuilder
 {
+    /// <summary>
+    /// Mapping info for a member to string-format.
+    /// </summary>
     public sealed class ToStringPropertyMap
     {
         private readonly Func<object, object> _accessor;
