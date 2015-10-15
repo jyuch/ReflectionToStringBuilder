@@ -62,6 +62,7 @@
     <Compile Include="MemberNamingTests.cs" />
     <Compile Include="IgnoreMap.cs" />
     <Compile Include="IgnoreStaticMemberTests.cs" />
+    <Compile Include="ExpandIEnumerableTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReflectionToStringBuilder\ReflectionToStringBuilder.csproj">

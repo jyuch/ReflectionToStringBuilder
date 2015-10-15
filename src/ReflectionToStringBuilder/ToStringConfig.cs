@@ -27,6 +27,8 @@ namespace Jyuch.ReflectionToStringBuilder
         /// </summary>
         public TargetType OutputTarget { get; set; } = TargetType.Property;
 
+        public bool ExpandIEnumerable { get; set; } = false;
+
         /// <summary>
         /// Specify member of ignoring when generate string-format.
         /// </summary>
