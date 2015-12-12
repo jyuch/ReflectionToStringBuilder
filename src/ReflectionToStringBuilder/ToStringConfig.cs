@@ -27,6 +27,9 @@ namespace Jyuch.ReflectionToStringBuilder
         /// </summary>
         public TargetType OutputTarget { get; set; } = TargetType.Property;
 
+        /// <summary>
+        /// Specify whether to expand IEnumerable member. Default is <code>false</code>.
+        /// </summary>
         public bool ExpandIEnumerable { get; set; } = false;
 
         /// <summary>
