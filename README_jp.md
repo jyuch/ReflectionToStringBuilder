@@ -10,12 +10,15 @@ ReflectionでToStringするアレ
 開発者は以下の環境で開発及び動作確認を行っています。
 
 - Windows 8.1 Pro
-- Visual Studio 2015 Community Edition
+- Visual Studio 2015 update 1 Community Edition
 
 ## Usagi
 使い方はWikiを参照して下さい。
 
 https://github.com/jyuch/ReflectionToStringBuilder/wiki
+
+## ver.1.2からの変更点
+- IEnumerableを展開するオプションを追加
 
 ## ver.1.1からの変更点
 - 手動で文字列形式へマッピングする機能の追加
