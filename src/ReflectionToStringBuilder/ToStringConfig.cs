@@ -28,6 +28,11 @@ namespace Jyuch.ReflectionToStringBuilder
         public TargetType OutputTarget { get; set; } = TargetType.Property;
 
         /// <summary>
+        /// Specify whether to expand IEnumerable member. Default is <code>false</code>.
+        /// </summary>
+        public bool ExpandIEnumerable { get; set; } = false;
+
+        /// <summary>
         /// Specify member of ignoring when generate string-format.
         /// </summary>
         /// <param name="expression">The member of ignoring.</param>

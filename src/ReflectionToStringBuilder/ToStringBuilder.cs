@@ -62,7 +62,7 @@ namespace Jyuch.ReflectionToStringBuilder
                 exprs = InitAccessor(objType);
                 _accessorCache.TryAdd(objType, exprs);
             }
-            
+
             var r = exprs
                 .Where(it => !config.IgnoreMember.Contains(it.MemberInfo))
                 .Where(it => config.OutputTarget != TargetType.Property || it.MemberInfo is PropertyInfo)
@@ -70,17 +70,25 @@ namespace Jyuch.ReflectionToStringBuilder
                 .Select(it => new { MemberName = it.MemberInfo.Name, Value = it.Accessor(obj) })
                 .Where(it => config.IgnoreMode == IgnoreMemberMode.None || it.Value != null)
                 .Where(it => config.IgnoreMode != IgnoreMemberMode.NullOrWhiteSpace || !string.IsNullOrWhiteSpace(it.Value.ToString()));
-            
+
             var toStringText = new StringBuilder();
             toStringText.Append(objType.Name).Append("{");
-            toStringText.Append(string.Join(",", r.Select(it => PropertyFormatter(it.MemberName, it.Value))));
+            toStringText.Append(string.Join(",", r.Select(it => PropertyFormatter(it.MemberName, it.Value, config.ExpandIEnumerable))));
             toStringText.Append("}");
             return toStringText.ToString();
         }
 
-        private static string PropertyFormatter(string propertyName, object value)
+        private static string PropertyFormatter(string propertyName, object value, bool isExpandEnum)
         {
-            return $"{propertyName}={value?.ToString() ?? string.Empty}";
+            if (isExpandEnum && value is System.Collections.IEnumerable)
+            {
+                var e = ((System.Collections.IEnumerable)value).Cast<object>().Select(it => it?.ToString() ?? string.Empty);
+                return $"{propertyName}=[{string.Join(",", e)}]";
+            }
+            else
+            {
+                return $"{propertyName}={value?.ToString() ?? string.Empty}";
+            }
         }
 
         private static IEnumerable<MemberAccessor> InitAccessor(Type targetType)
