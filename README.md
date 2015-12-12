@@ -10,7 +10,7 @@ This library requires .NET Framework 4 or later.
 This library developed under below environment.
 
 - Windows 8.1 Pro
-- Visual Studio 2015 Community Edition
+- Visual Studio 2015 update 1 Community Edition
 
 ## Usage
 Please refer to the Wiki how to use. (in Japanese)
