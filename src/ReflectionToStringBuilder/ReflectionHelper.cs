@@ -18,7 +18,7 @@ namespace Jyuch.ReflectionToStringBuilder
             var getPropValue = Expression.MakeMemberAccess(convToTarget, property);
             var convToObject = Expression.Convert(getPropValue, typeof(object));
             var lambda = Expression.Lambda(convToObject, arg);
-            Func<object, object> expr = (Func<object, object>)lambda.Compile();
+            var expr = (Func<object, object>)lambda.Compile();
             return expr;
         }
 
@@ -38,7 +38,8 @@ namespace Jyuch.ReflectionToStringBuilder
             var property = member as PropertyInfo;
             if (property == null)
             {
-                throw new ArgumentException(string.Format("'{0}' is not a property. Did you try to map a field by accident?", member.Name));
+                throw new ArgumentException(
+                    $"'{member.Name}' is not a property. Did you try to map a field by accident?");
             }
 
             return property;
@@ -62,7 +63,7 @@ namespace Jyuch.ReflectionToStringBuilder
 
             if (memberExpression == null)
             {
-                throw new ArgumentException("Not a member access", "expression");
+                throw new ArgumentException("Not a member access", nameof(expression));
             }
 
             return memberExpression;
