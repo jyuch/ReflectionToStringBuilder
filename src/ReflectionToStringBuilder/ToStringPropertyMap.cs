@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015 jyuch
+﻿// Copyright (c) 2015-2016 jyuch
 // Released under the MIT license
 // https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE
 
@@ -16,13 +16,7 @@ namespace Jyuch.ReflectionToStringBuilder
         private string _name;
 
         private bool _isIgnore;
-        internal bool IsIgnore
-        {
-            get
-            {
-                return _isIgnore;
-            }
-        }
+        internal bool IsIgnore => _isIgnore;
 
         internal ToStringPropertyMap(Type objectType, MemberInfo member)
         {

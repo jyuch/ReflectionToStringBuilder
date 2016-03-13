@@ -34,6 +34,12 @@
     <DocumentationFile>bin\Release\Jyuch.ReflectionToStringBuilder.XML</DocumentationFile>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ReflectionToStringBuilder.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +58,9 @@
     <Compile Include="ToStringConfig.cs" />
     <Compile Include="ToStringMap.cs" />
     <Compile Include="ToStringPropertyMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReflectionToStringBuilder.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
