@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015 jyuch
+﻿// Copyright (c) 2015-2016 jyuch
 // Released under the MIT license
 // https://github.com/jyuch/ReflectionToStringBuilder/blob/master/LICENSE
 

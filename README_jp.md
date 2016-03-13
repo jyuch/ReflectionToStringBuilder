@@ -9,7 +9,7 @@ ReflectionでToStringするアレ
 
 開発者は以下の環境で開発及び動作確認を行っています。
 
-- Windows 8.1 Pro
+- Windows 10 Pro
 - Visual Studio 2015 update 1 Community Edition
 
 ## Usagi
@@ -17,14 +17,18 @@ ReflectionでToStringするアレ
 
 https://github.com/jyuch/ReflectionToStringBuilder/wiki
 
-## ver.1.2からの変更点
+## ver.1.4での変更点
+- 厳密な名前でアセンブリに署名するように変更
+- CLS（Common Language Specification）に準拠
+
+## ver.1.3での変更点
 - IEnumerableを展開するオプションを追加
 
-## ver.1.1からの変更点
+## ver.1.2での変更点
 - 手動で文字列形式へマッピングする機能の追加
 - 設定を適用しなかった時にデフォルトで割り当てられるインスタンスをキャッシュするように修正
 
-## ver.1.0からの変更点
+## ver.1.1での変更点
 - パブリックプロパティだけでなく、パブリックなフィールドも文字列形式に含められるようになりました
 - クラス名などをより適切な名前へ変更しました
 - **上記の変更によってver.1.0と互換性が無くなりました**
