@@ -41,13 +41,7 @@ namespace Jyuch.ReflectionToStringBuilder
             _ignoreMember.Add(ReflectionHelper.GetMember(expression));
         }
 
-        internal HashSet<MemberInfo> IgnoreMember
-        {
-            get
-            {
-                return _ignoreMember;
-            }
-        }
+        internal HashSet<MemberInfo> IgnoreMember => _ignoreMember;
     }
 
     internal class DefaultConfig<T>

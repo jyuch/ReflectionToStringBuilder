@@ -16,13 +16,7 @@ namespace Jyuch.ReflectionToStringBuilder
         private string _name;
 
         private bool _isIgnore;
-        internal bool IsIgnore
-        {
-            get
-            {
-                return _isIgnore;
-            }
-        }
+        internal bool IsIgnore => _isIgnore;
 
         internal ToStringPropertyMap(Type objectType, MemberInfo member)
         {
